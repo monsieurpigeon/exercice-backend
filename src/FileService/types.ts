@@ -19,6 +19,9 @@ export class FileAttributes {
 
   @Field(_type => Boolean)
   isDirectory: Boolean;
+
+  @Field(_type => Boolean)
+  isSymbolicLink: Boolean;
 }
 
 @ObjectType({ description: "Object representing a file" })
