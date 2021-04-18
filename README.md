@@ -32,7 +32,7 @@ localhost:49160/graphql
 3. Query the API using this test query :
 ```graphql
 {
-  files(path: "filesystem"){
+  files(path: "bonjour"){
     path
     size
     attributes {
@@ -57,6 +57,8 @@ localhost:49160/graphql
 - fs stat
 
 ## Learnings
+
+- File system user access security : https://nodejs.org/en/knowledge/file-system/security/introduction/
 
 - Meaning of stat.birthtime and nodeJS history about it's implementation : https://joshuatz.com/posts/2019/unix-linux-file-creation-stamps-aka-birthtime-and-nodejs/
 

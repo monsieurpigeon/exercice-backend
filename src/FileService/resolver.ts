@@ -7,26 +7,41 @@ import {
 import { File } from "./types";
 import { readdir } from 'fs';
 import { stat } from "fs";
+import pathLib = require("path")
 
-const FILE_SYSTEM_ROOT = './filesystem';
+const FILE_SYSTEM_ROOT = 'filesystem';
 
-@Resolver(_of => File)
+@Resolver(File)
 export class FileResolver {
 
-  @Query(_returns => [File], { nullable: true, description: "Get all the files from a folder's path" })
-  async files(@Arg("path") path: string): Promise<File[] | undefined> {
+  @Query(() => [File], { nullable: true, description: "Get all the files from a folder's path" })
+  async files(@Arg("path") pathInput: string): Promise<File[] | undefined> {
+    // Poison Null Bytes
+    if (pathInput.indexOf('\0') !== -1) {
+      throw new Error("That was evil.");
+    }
+
+    const path = pathLib.join(FILE_SYSTEM_ROOT, pathInput);
+    if (path.indexOf(FILE_SYSTEM_ROOT) !== 0) {
+      console.log(path)
+      throw new Error("Would you stay in your file system please ?!");
+    }
+
     const files: string[] = await new Promise((resolve, reject) => {
-      readdir(`${FILE_SYSTEM_ROOT}/${path}`, (err, data) => {
+      readdir(path, (err, data) => {
         if (err) reject(err);
         resolve(data);
       })
-    })
+    });
+
     return Promise.all(files.map((file) => {
       return new Promise<File>((resolve, reject) => {
-        stat(`${FILE_SYSTEM_ROOT}/${path}/${file}`, (err, stats) => {
+        const filePath = pathLib.join(path, file)
+        stat(filePath, (err, stats) => {
           if (err) reject(err);
           resolve({
-            path:`${path}/${file}`, size: stats.size, attributes: {
+            path: filePath,
+            size: stats.size, attributes: {
               lastRead: stats.atime,
               lastUpdate: stats.mtime,
               lastMetadataUpdate: stats.ctime,
