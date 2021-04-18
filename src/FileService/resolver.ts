@@ -4,10 +4,9 @@ import {
   Arg
 } from "type-graphql";
 
-import { File } from "./type";
+import { File } from "./types";
 import { readdir } from 'fs';
-
-
+import { stat } from "fs";
 
 @Resolver(_of => File)
 export class FileResolver {
@@ -20,10 +19,22 @@ export class FileResolver {
         resolve(data);
       })
     })
-    return files.map((file) => {
-      return {
-        path, size: 5, attributes: file
-      }
-    })
+    return Promise.all(files.map((file) => {
+      return new Promise<File>((resolve, reject) => {
+        stat(`${path}/${file}`, (err, stats) => {
+          if (err) reject(err);
+          resolve({
+            path:`${path}/${file}`, size: stats.size, attributes: {
+              lastRead: stats.atime,
+              lastUpdate: stats.mtime,
+              lastMetadataUpdate: stats.ctime,
+              birthTime: stats.birthtime,
+              isFile: stats.isFile(),
+              isDirectory: stats.isDirectory()
+            }
+          });
+        })
+      });
+    }))
   }
 }
