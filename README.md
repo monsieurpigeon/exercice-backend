@@ -42,6 +42,7 @@ localhost:49160/graphql
       birthTime
       isFile
       isDirectory
+      isSymbolicLink
     }
   }
 }
@@ -54,3 +55,11 @@ localhost:49160/graphql
 - apollo-server
 - type-graphql
 - fs stat
+
+## Learnings
+
+- Meaning of stat.birthtime and nodeJS history about it's implementation : https://joshuatz.com/posts/2019/unix-linux-file-creation-stamps-aka-birthtime-and-nodejs/
+
+- usage of docker-compose + typescript + express : https://github.com/sidhantpanda/docker-express-typescript-boilerplate/blob/master/docker-compose.yml
+
+- Using git tags : https://www.youtube.com/watch?v=govmXpDGLpo&ab_channel=AutomationStepbyStep-RaghavPal
