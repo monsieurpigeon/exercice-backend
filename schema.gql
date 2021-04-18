@@ -21,6 +21,7 @@ type FileAttributes {
   birthTime: DateTime!
   isDirectory: Boolean!
   isFile: Boolean!
+  isSymbolicLink: Boolean!
   lastMetadataUpdate: DateTime!
   lastRead: DateTime!
   lastUpdate: DateTime!
