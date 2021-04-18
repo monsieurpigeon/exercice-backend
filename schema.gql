@@ -3,12 +3,27 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
 """Object representing a file"""
 type File {
   """attibutes of the file"""
-  attributes: String!
+  attributes: FileAttributes!
   path: String!
   size: Int!
+}
+
+"""Object representing attributes of a file"""
+type FileAttributes {
+  birthTime: DateTime!
+  isDirectory: Boolean!
+  isFile: Boolean!
+  lastMetadataUpdate: DateTime!
+  lastRead: DateTime!
+  lastUpdate: DateTime!
 }
 
 type Query {
