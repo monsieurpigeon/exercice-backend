@@ -23,7 +23,6 @@ export class FileResolver {
 
     const path = pathLib.join(FILE_SYSTEM_ROOT, pathInput);
     if (path.indexOf(FILE_SYSTEM_ROOT) !== 0) {
-      console.log(path)
       throw new Error("Would you stay in your file system please ?!");
     }
 
@@ -41,7 +40,8 @@ export class FileResolver {
           if (err) reject(err);
           resolve({
             path: filePath,
-            size: stats.size, attributes: {
+            size: stats.size,
+            attributes: {
               lastRead: stats.atime,
               lastUpdate: stats.mtime,
               lastMetadataUpdate: stats.ctime,
