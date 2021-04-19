@@ -4,3 +4,7 @@ services:
     build: .
     ports:
       - "49160:8080"
+    volumes:
+      - type: bind
+        source: ./filesystem
+        target: /usr/src/app/filesystem
