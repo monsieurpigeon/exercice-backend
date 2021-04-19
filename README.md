@@ -13,26 +13,35 @@ You can use REST or Graphql. We are a Graphql company, but if you don’t know i
 ## Prerequisites
 
 Make sure you have installed all of the following prerequisites on your development machine:
-- nodejs
-- docker
+- nodejs 
+- docker >20.0
+
+### On a mac
+
+Make sure to allow full disk access to docker.app
 
 ## Running the application
 
-1. To run the API on port 49160 :
+1. Generate the filesystem :
+```
+sh script/generateFilesystem.sh
+```
+
+2. Run the API and expose it on port 49160 :
 
 ```
-docker-compose run web
+docker-compose up
 ```
 
-2. You can access the API UI on your browser at :
+3. You can access the API UI on your browser at :
 ```
 localhost:49160/graphql
 ```
 
-3. Query the API using this test query :
+4. Query the API using this test query :
 ```graphql
 {
-  files(path: "bonjour"){
+  files(path: ""){
     path
     size
     attributes {
@@ -57,6 +66,8 @@ localhost:49160/graphql
 - fs stat
 
 ## Learnings
+
+- Docker bind mounts : https://stackoverflow.com/questions/41299514/docker-compose-define-mount-for-bind-mount-and-managed-mount
 
 - File system user access security : https://nodejs.org/en/knowledge/file-system/security/introduction/
 
