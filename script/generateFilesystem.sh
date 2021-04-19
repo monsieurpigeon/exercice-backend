@@ -1,3 +1,5 @@
+#!/bin/bash
+
 mkdir filesystem;
 cd filesystem;
 for i in {1..10}
@@ -31,4 +33,5 @@ do
     cd ..
   done
   cd ..
+  echo "$i 0 %"
 done
